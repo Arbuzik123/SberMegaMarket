@@ -1,11 +1,9 @@
 import math
-import chromedriver_autoinstaller
 from multiprocessing import Process, Semaphore
 import pandas as pd
 import os
 from Searchengines.SberMegaMarketSearch import Sbermegasearch
 
-chromedriver_autoinstaller.install()
 
 async def SBFind(cat):
     df = pd.read_excel(rf'{cat}.')
