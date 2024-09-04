@@ -10,7 +10,7 @@ import pandas as pd
 import re
 from Searchengines.ConverExtract import convert_symbols_in_brackets
 import os
-
+import uuid
 
 def process_element(element, row, index, df):
     print("process_element начался")
@@ -75,24 +75,8 @@ def process_element(element, row, index, df):
 
 
 def Sbermegasearch(e, path, lock, X, Y, positions):
+    custom_dir = f"driver"
     unique_id = str(uuid.uuid4())
-
-    # Задаем уникальный путь для сохранения chromedriver
-    custom_dir = f"driver_{unique_id}"
-
-    # Создаем директорию, если она не существует
-    os.makedirs(custom_dir, exist_ok=True)
-
-    # Создаем патчер с указанием пользовательского пути для сохранения chromedriver
-    patcher = uc.Patcher(executable_path=os.path.join(custom_dir, 'chromedriver.exe'))
-    patcher.auto()  # Автоматическая настройка патчера
-
-    # Опции для Chrome
-    unique_id = str(uuid.uuid4())
-
-    # Задаем уникальный путь для сохранения chromedriver
-    custom_dir = f"driver_{unique_id}"
-
     # Создаем директорию, если она не существует
     os.makedirs(custom_dir, exist_ok=True)
 
@@ -107,7 +91,7 @@ def Sbermegasearch(e, path, lock, X, Y, positions):
     options.add_argument(f'--profile-directory=Profile_{unique_id}')
 
     # Создание экземпляра Chrome с патчером
-    driver = uc.Chrome(options=options, patcher=patcher)
+    driver = uc.Chrome(options=options, patcher=patcher, driver_executable_path=fr"C:\Users\user\PycharmProjects\SberMegaFind\driver\chromedriver.exe")
     driver.set_window_size(X, Y)
     driver.set_window_position(*positions, windowHandle='current')
     file_path = path.split("_")[0]
